@@ -11,6 +11,11 @@ public class InMemoryOperationHistory implements OperationHistory{
         this.history.add(operation);
     }
 
+    @Override
+    public List<StatementLine> getStatement() {
+        return null;
+    }
+
     List<Operation> getOperations() {
         return new ArrayList<>(history);
     }

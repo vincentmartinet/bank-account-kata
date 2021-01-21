@@ -12,4 +12,8 @@ public class Account {
     public void depose(Money amount, LocalDateTime operationDate) {
         history.add(new Operation(OperationType.DEPOSIT, amount, operationDate));
     }
+
+    public void printStatement(StatementPrinter printer) {
+        printer.print(history.getStatement());
+    }
 }
