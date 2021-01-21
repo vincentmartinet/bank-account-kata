@@ -3,7 +3,7 @@ package com.sfeir.kata.bankaccount;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryOperationHistory implements OperationHistory{
+public class InMemoryOperationHistory implements OperationHistory {
     private final List<Operation> history = new ArrayList<>();
 
     @Override
@@ -13,7 +13,13 @@ public class InMemoryOperationHistory implements OperationHistory{
 
     @Override
     public List<StatementLine> getStatement() {
-        return null;
+        Money balance = new Money(0);
+        List<StatementLine> statement = new ArrayList<>();
+        for (Operation operation : history) {
+            balance = balance.add(operation.getAmount());
+            statement.add(new StatementLine(operation, balance));
+        }
+        return statement;
     }
 
     List<Operation> getOperations() {

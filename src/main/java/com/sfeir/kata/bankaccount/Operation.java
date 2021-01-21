@@ -15,6 +15,18 @@ public class Operation {
         this.creation = date;
     }
 
+    public OperationType getType() {
+        return type;
+    }
+
+    public Money getAmount() {
+        return amount;
+    }
+
+    public LocalDateTime getCreation() {
+        return creation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

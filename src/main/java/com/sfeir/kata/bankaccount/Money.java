@@ -18,6 +18,10 @@ public class Money {
         return amount.equals(money.amount);
     }
 
+    public Money add(Money other) {
+        return new Money(this.amount.add(other.amount));
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(amount);
