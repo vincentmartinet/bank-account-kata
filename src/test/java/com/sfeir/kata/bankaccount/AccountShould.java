@@ -39,4 +39,18 @@ class AccountShould {
         // then
         verify(printer).print(statement);
     }
+
+    @Test
+    void add_withdrawal_of_80_to_operation_history() {
+        // given
+        OperationHistory operationHistory = mock(OperationHistory.class);
+        Account account = new Account(operationHistory);
+        LocalDateTime operationDate = LocalDateTime.now();
+
+        // test
+        account.withdraw(new Money(80), operationDate);
+
+        // assert
+        verify(operationHistory).add(new Operation(OperationType.WITHDRAWAL, new Money(80), operationDate));
+    }
 }

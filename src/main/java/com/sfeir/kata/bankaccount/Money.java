@@ -15,11 +15,15 @@ public class Money {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Money money = (Money) o;
-        return amount.equals(money.amount);
+        return amount.compareTo(money.amount) == 0;
     }
 
     public Money add(Money other) {
         return new Money(this.amount.add(other.amount));
+    }
+
+    public Money subtract(Money other) {
+        return new Money(this.amount.subtract(other.amount));
     }
 
     @Override

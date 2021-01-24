@@ -39,7 +39,24 @@ class InMemoryOperationHistoryShould {
                 new StatementLine(operation1, new Money(10)),
                 new StatementLine(operation2, new Money(20))
         ));
+    }
 
+    @Test
+    void give_statement_of_one_deposit_and_one_withdrawal() {
+        // given
+        InMemoryOperationHistory operationHistory = new InMemoryOperationHistory();
+        Operation deposit = new Operation(OperationType.DEPOSIT, new Money(100), LocalDateTime.now());
+        Operation withdrawal = new Operation(OperationType.WITHDRAWAL, new Money(20), LocalDateTime.now());
+        operationHistory.add(deposit);
+        operationHistory.add(withdrawal);
 
+        // when
+        List<StatementLine> statement = operationHistory.getStatement();
+
+        // then
+        assertEquals(statement, Arrays.asList(
+                new StatementLine(deposit, new Money(100)),
+                new StatementLine(withdrawal, new Money(80))
+        ));
     }
 }

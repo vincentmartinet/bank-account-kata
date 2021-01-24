@@ -26,6 +26,10 @@ public class AccountStepdefs implements En {
             account.depose(new Money(new BigDecimal(amount)), LocalDateTime.now());
         });
 
+        When("^I withdraw \"([^\"]*)\"$", (String amount) -> {
+            account.withdraw(new Money(new BigDecimal(amount)), LocalDateTime.now());
+        });
+
         Then("^I should have a new balance of \"([^\"]*)\"$", (String balance) -> {
             account.printStatement(lines -> {
                 Optional<StatementLine> lastLine = lines.stream().reduce((sl1, sl2) -> sl2);

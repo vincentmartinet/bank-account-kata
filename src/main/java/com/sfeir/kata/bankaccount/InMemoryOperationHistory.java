@@ -16,7 +16,12 @@ public class InMemoryOperationHistory implements OperationHistory {
         Money balance = new Money(0);
         List<StatementLine> statement = new ArrayList<>();
         for (Operation operation : history) {
-            balance = balance.add(operation.getAmount());
+            if (operation.getType() == OperationType.DEPOSIT) {
+                balance = balance.add(operation.getAmount());
+            }
+            if (operation.getType() == OperationType.WITHDRAWAL) {
+                balance = balance.subtract(operation.getAmount());
+            }
             statement.add(new StatementLine(operation, balance));
         }
         return statement;
