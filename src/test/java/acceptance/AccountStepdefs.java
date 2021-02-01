@@ -36,4 +36,19 @@ public class AccountStepdefs {
             assertEquals(new Money(balance), last.getBalance());
         });
     }
+
+    @Given("I have a bank account with the following operations made")
+    public void iHaveABankAccountWithTheFollowingOperationsMade() {
+        throw new PendingException();
+    }
+
+    @When("I ask to see the history of my operations")
+    public void iAskToSeeTheHistoryOfMyOperations() {
+        throw new PendingException();
+    }
+
+    @Then("I have the following statement printed")
+    public void iHaveTheFollowingStatementPrinted() {
+        throw new PendingException();
+    }
 }
