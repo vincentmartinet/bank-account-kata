@@ -74,4 +74,25 @@ class InMemoryOperationHistoryShould {
         assertEquals(asList(new StatementLine(operation, new Money(-70))), statement);
     }
 
+    @Test
+    void add_withdrawal_of_70_and_5_and_it_shows_in_the_statement() {
+        // given
+        Operation operation1 = new Operation(WITHDRAWAL, new Money(70), LocalDate.now());
+        Operation operation2 = new Operation(WITHDRAWAL, new Money(5), LocalDate.now());
+        InMemoryOperationHistory operationHistory = new InMemoryOperationHistory(
+                operation1,
+                operation2
+        );
+
+        // when
+        List<StatementLine> statement = operationHistory.getStatement();
+
+        // then
+        assertEquals(
+                asList(
+                        new StatementLine(operation1, new Money(-70)),
+                        new StatementLine(operation2, new Money(-75))
+                ), statement);
+    }
+
 }

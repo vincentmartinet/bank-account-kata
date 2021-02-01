@@ -1,6 +1,7 @@
 package com.sfeir.kata.bankaccount;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,6 +14,10 @@ public class InMemoryOperationHistory implements OperationHistory {
         this(new ArrayList<>());
     }
 
+    public InMemoryOperationHistory(Operation ...ops) {
+        this(Arrays.asList(ops));
+    }
+
     public InMemoryOperationHistory(List<Operation> history) {
         this.history = history;
     }
@@ -23,7 +28,7 @@ public class InMemoryOperationHistory implements OperationHistory {
         ArrayList<StatementLine> statement = new ArrayList<>();
         for (final Operation operation : history) {
             if (operation.getType() == WITHDRAWAL) {
-                balance = operation.getAmount().negate();
+                balance = balance.add(operation.getAmount().negate());
             } else {
                 balance = balance.add(operation.getAmount());
             }
