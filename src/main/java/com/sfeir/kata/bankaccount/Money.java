@@ -15,6 +15,10 @@ public class Money {
         return new Money(this.amount.add(other.amount));
     }
 
+    public Money negate() {
+        return new Money(amount.negate());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

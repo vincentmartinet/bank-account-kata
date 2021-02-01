@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.sfeir.kata.bankaccount.Operation.Type.WITHDRAWAL;
+
 public class InMemoryOperationHistory implements OperationHistory {
     private final List<Operation> history;
 
@@ -20,7 +22,11 @@ public class InMemoryOperationHistory implements OperationHistory {
         Money balance = new Money(0);
         ArrayList<StatementLine> statement = new ArrayList<>();
         for (final Operation operation : history) {
-            balance = balance.add(operation.getAmount());
+            if (operation.getType() == WITHDRAWAL) {
+                balance = operation.getAmount().negate();
+            } else {
+                balance = balance.add(operation.getAmount());
+            }
             statement.add(new StatementLine(operation, balance));
         }
         return statement;
