@@ -11,6 +11,10 @@ public class Money {
         this.amount = new BigDecimal(amount.toString());
     }
 
+    public Money add(Money other) {
+        return new Money(this.amount.add(other.amount));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

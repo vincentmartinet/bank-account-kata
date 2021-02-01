@@ -38,4 +38,25 @@ class InMemoryOperationHistoryShould {
         assertEquals(asList(new StatementLine(operation, new Money(10))), statement);
     }
 
+    @Test
+    void add_deposit_of_10_and_50_and_it_shows_in_the_statement() {
+        // given
+        InMemoryOperationHistory operationHistory = new InMemoryOperationHistory();
+        Operation operation1 = new Operation(DEPOSIT, new Money(10), LocalDate.now());
+        Operation operation2 = new Operation(DEPOSIT, new Money(50), LocalDate.now());
+        operationHistory.add(operation1);
+        operationHistory.add(operation2);
+
+        // when
+        List<StatementLine> statement = operationHistory.getStatement();
+
+        // then
+        assertEquals(
+                asList(
+                        new StatementLine(operation1, new Money(10)),
+                        new StatementLine(operation2, new Money(10+50))
+                ),
+                statement);
+    }
+
 }
