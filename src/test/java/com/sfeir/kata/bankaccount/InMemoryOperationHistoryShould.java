@@ -28,9 +28,8 @@ class InMemoryOperationHistoryShould {
     @Test
     void add_deposit_of_10_and_it_shows_in_the_statement() {
         // given
-        InMemoryOperationHistory operationHistory = new InMemoryOperationHistory();
         Operation operation = new Operation(DEPOSIT, new Money(10), LocalDate.now());
-        operationHistory.add(operation);
+        InMemoryOperationHistory operationHistory = new InMemoryOperationHistory(operation);
 
         // when
         List<StatementLine> statement = operationHistory.getStatement();
@@ -42,11 +41,12 @@ class InMemoryOperationHistoryShould {
     @Test
     void add_deposit_of_10_and_50_and_it_shows_in_the_statement() {
         // given
-        InMemoryOperationHistory operationHistory = new InMemoryOperationHistory();
         Operation operation1 = new Operation(DEPOSIT, new Money(10), LocalDate.now());
         Operation operation2 = new Operation(DEPOSIT, new Money(50), LocalDate.now());
-        operationHistory.add(operation1);
-        operationHistory.add(operation2);
+        InMemoryOperationHistory operationHistory = new InMemoryOperationHistory(
+                operation1,
+                operation2
+        );
 
         // when
         List<StatementLine> statement = operationHistory.getStatement();
@@ -63,9 +63,8 @@ class InMemoryOperationHistoryShould {
     @Test
     void add_withdrawal_of_70_and_it_shows_in_the_statement() {
         // given
-        InMemoryOperationHistory operationHistory = new InMemoryOperationHistory();
         Operation operation = new Operation(WITHDRAWAL, new Money(70), LocalDate.now());
-        operationHistory.add(operation);
+        InMemoryOperationHistory operationHistory = new InMemoryOperationHistory(operation);
 
         // when
         List<StatementLine> statement = operationHistory.getStatement();
