@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static com.sfeir.kata.bankaccount.Operation.Type.DEPOSIT;
+import static com.sfeir.kata.bankaccount.Operation.Type.WITHDRAWAL;
 import static java.util.Arrays.asList;
 import static org.mockito.Mockito.*;
 
@@ -40,5 +41,19 @@ class AccountShould {
 
         // then
         verify(mockPrinter, only()).printStatement(expected);
+    }
+
+    @Test
+    void add_withdrawal_of_900_to_history() {
+        // given
+        OperationHistory mock = mock(OperationHistory.class);
+        Account account = new Account(mock);
+        LocalDate date = LocalDate.now();
+
+        // when
+        account.withdraw(new Money(900), date);
+
+        // then
+        verify(mock, only()).add(new Operation(WITHDRAWAL, new Money(900), date));
     }
 }

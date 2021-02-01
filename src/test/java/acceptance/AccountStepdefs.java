@@ -26,7 +26,7 @@ public class AccountStepdefs {
 
     @When("I withdraw {int} units of money")
     public void iWithdrawUnitsOfMoney(int amount) {
-        throw new PendingException();
+        account.withdraw(new Money(amount), LocalDate.now());
     }
 
     @Then("I should see a final balance of {int} unit of money")

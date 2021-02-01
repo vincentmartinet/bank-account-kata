@@ -49,6 +49,6 @@ public class Operation {
     }
 
     public enum Type {
-        DEPOSIT
+        DEPOSIT, WITHDRAWAL
     }
 }

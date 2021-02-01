@@ -13,6 +13,10 @@ public class Account {
         operationHistory.add(new Operation(Operation.Type.DEPOSIT, amount, date));
     }
 
+    public void withdraw(Money amount, LocalDate date) {
+        operationHistory.add(new Operation(Operation.Type.WITHDRAWAL, amount, date));
+    }
+
     public void printStatement(StatementPrinter printer) {
         printer.printStatement(operationHistory.getStatement());
     }
