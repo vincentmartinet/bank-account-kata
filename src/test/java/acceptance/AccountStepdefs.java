@@ -3,10 +3,12 @@ package acceptance;
 import com.sfeir.kata.bankaccount.Account;
 import com.sfeir.kata.bankaccount.InMemoryOperationHistory;
 import com.sfeir.kata.bankaccount.Money;
-import io.cucumber.java.PendingException;
+import com.sfeir.kata.bankaccount.StatementLine;
 import io.cucumber.java.en.*;
 
 import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AccountStepdefs {
     private Account account;
@@ -22,7 +24,10 @@ public class AccountStepdefs {
     }
 
     @Then("I should see a final balance of {int} unit of money")
-    public void iShouldSeeAFinalBalanceOfSUnitOfMoney(int arg0) {
-        throw new PendingException();
+    public void iShouldSeeAFinalBalanceOfSUnitOfMoney(int balance) {
+        account.printStatement(lines -> {
+            StatementLine last = lines.get(lines.size() - 1);
+            assertEquals(new Money(balance), last.getBalance());
+        });
     }
 }

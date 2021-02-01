@@ -3,6 +3,7 @@ package com.sfeir.kata.bankaccount;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class InMemoryOperationHistory implements OperationHistory {
     private final List<Operation> history;
@@ -17,7 +18,9 @@ public class InMemoryOperationHistory implements OperationHistory {
 
     @Override
     public List<StatementLine> getStatement() {
-        throw new RuntimeException("not implemented");
+        return this.history.stream()
+                .map(operation -> new StatementLine(operation, operation.getAmount()))
+                .collect(Collectors.toList());
     }
 
     @Override
