@@ -2,7 +2,10 @@ package com.sfeir.kata.bankaccount;
 
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+import java.util.List;
 
+import static com.sfeir.kata.bankaccount.Operation.Type.DEPOSIT;
+import static java.util.Arrays.asList;
 import static org.mockito.Mockito.*;
 
 class AccountShould {
@@ -17,6 +20,25 @@ class AccountShould {
         account.depose(new Money(20), date);
 
         // then
-        verify(mock, only()).add(new Operation(Operation.Type.DEPOSIT, new Money(20), date));
+        verify(mock, only()).add(new Operation(DEPOSIT, new Money(20), date));
+    }
+
+    @Test
+    void add_deposit_of_450_and_feed_it_to_the_statement_printer() {
+        // given
+        OperationHistory history = mock(OperationHistory.class);
+        List<StatementLine> expected = asList(new StatementLine(
+                new Operation(DEPOSIT, new Money(450), LocalDate.now()),
+                new Money(450)
+        ));
+        when(history.getStatement()).thenReturn(expected);
+        Account account = new Account(history);
+        StatementPrinter mockPrinter = mock(StatementPrinter.class);
+
+        // when
+        account.printStatement(mockPrinter);
+
+        // then
+        verify(mockPrinter, only()).printStatement(expected);
     }
 }

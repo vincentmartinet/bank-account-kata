@@ -16,6 +16,11 @@ public class InMemoryOperationHistory implements OperationHistory {
     }
 
     @Override
+    public List<StatementLine> getStatement() {
+        throw new RuntimeException("not implemented");
+    }
+
+    @Override
     public void add(Operation operation) {
         this.history.add(operation);
     }
