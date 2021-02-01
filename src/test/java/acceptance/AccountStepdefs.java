@@ -4,6 +4,7 @@ import com.sfeir.kata.bankaccount.Account;
 import com.sfeir.kata.bankaccount.InMemoryOperationHistory;
 import com.sfeir.kata.bankaccount.Money;
 import com.sfeir.kata.bankaccount.StatementLine;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.*;
 
 import java.time.LocalDate;
@@ -21,6 +22,11 @@ public class AccountStepdefs {
     @When("I depose {int} units of money")
     public void iDeposeUnitsOfMoney(int amount) {
         account.depose(new Money(amount), LocalDate.now());
+    }
+
+    @When("I withdraw {int} units of money")
+    public void iWithdrawUnitsOfMoney(int amount) {
+        throw new PendingException();
     }
 
     @Then("I should see a final balance of {int} unit of money")
