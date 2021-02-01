@@ -5,15 +5,19 @@ import io.cucumber.java.DataTableType;
 import io.cucumber.java.PendingException;
 import io.cucumber.java.en.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AccountStepdefs {
     private Account account;
+    private ByteArrayOutputStream output;
 
     @Given("I have an empty bank account")
     public void iHaveAnEmptyBankAccount() {
@@ -54,11 +58,16 @@ public class AccountStepdefs {
 
     @When("I ask to see the history of my operations")
     public void iAskToSeeTheHistoryOfMyOperations() {
-        throw new PendingException();
+        output = new ByteArrayOutputStream();
+        this.account.printStatement(new PrintStreamStatementPrinter(new PrintStream(output)));
     }
 
     @Then("I have the following statement printed")
-    public void iHaveTheFollowingStatementPrinted() {
-        throw new PendingException();
+    public void iHaveTheFollowingStatementPrinted(List<Map<String, String>> statement) {
+        String expected = "OPERATION,DATE,AMOUNT,BALANCE\n" +
+                statement.stream().map(entry ->
+                        String.join(",", entry.get("OPERATION"), entry.get("DATE"), entry.get("AMOUNT"), entry.get("BALANCE"))
+                ).collect(Collectors.joining("\n"))+"\n";
+        assertEquals(expected, output.toString());
     }
 }
