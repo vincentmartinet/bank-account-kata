@@ -1,13 +1,14 @@
 package acceptance;
 
-import com.sfeir.kata.bankaccount.Account;
-import com.sfeir.kata.bankaccount.InMemoryOperationHistory;
-import com.sfeir.kata.bankaccount.Money;
-import com.sfeir.kata.bankaccount.StatementLine;
+import com.sfeir.kata.bankaccount.*;
+import io.cucumber.java.DataTableType;
 import io.cucumber.java.PendingException;
 import io.cucumber.java.en.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -37,9 +38,18 @@ public class AccountStepdefs {
         });
     }
 
+    @DataTableType
+    public Operation newOperation(Map<String, String> entry) {
+        return new Operation(
+                Operation.Type.valueOf(entry.get("TYPE")),
+                new Money(new BigDecimal(entry.get("AMOUNT"))),
+                LocalDate.parse(entry.get("DATE"))
+        );
+    }
+
     @Given("I have a bank account with the following operations made")
-    public void iHaveABankAccountWithTheFollowingOperationsMade() {
-        throw new PendingException();
+    public void iHaveABankAccountWithTheFollowingOperationsMade(List<Operation> operations) {
+        this.account = new Account(new InMemoryOperationHistory(operations));
     }
 
     @When("I ask to see the history of my operations")
